@@ -7,14 +7,18 @@ const scoreDiv = document.querySelector('.score');
 const runScorePlayer = document.querySelector('.runScorePlayer');
 const runScoreComp = document.querySelector('.runScoreComp');
 const p = document.createElement('p');
+const newGame = document.createElement('button');
+const h2 = document.createElement('h2');
 
 
-
+//function to generate a computer choice.
 function getComputerChoice(){
     let choice = ["rock", "paper", "scissors"]
     let random = choice[Math.floor(Math.random() * choice.length)]
     return random;
 }
+
+//function to determine you wins a round. 
 
 function playRound(playerSelection,computerSelection){
 
@@ -61,19 +65,7 @@ function playRound(playerSelection,computerSelection){
 outcome.appendChild(p);
 }
 
-const checkWinner = (playerScore,computerScore) => {
-    const h2 = document.createElement('h2');
-    if(playerScore === 5){
-        h2.classList.add('playerWin');
-        h2.innerText = `You Win! Final Score is: ${playerScore} to ${computerScore}`;
-    } else if (computerScore === 5){
-        h2.classList.add('compWin');
-        h2.innerText = `You Lose. Final Score is: ${computerScore} to ${playerScore}`;
-    }
-    scoreDiv.appendChild(h2);
-}
-
-
+//Eventlistener for Buttons
 buttons.forEach(button => {
  button.addEventListener('click', () =>{
     const computerSelection = getComputerChoice();
@@ -82,6 +74,54 @@ buttons.forEach(button => {
  } )
 })
 
+//Function to check for a Winner
+const checkWinner = (playerScore,computerScore) => {
+    if(playerScore === 5){
+        h2.classList.add('playerWin');
+        h2.innerText = `You Win! Final Score is: ${playerScore} to ${computerScore}`;
 
+        newGame.classList.add('newGameBtn');
+        newGame.innerText = 'New Game'
+
+        scoreDiv.appendChild(h2);
+        scoreDiv.appendChild(newGame);
+
+        document.querySelector('.rock').disabled = true;
+
+        buttons.forEach(button => {
+            button.disabled = true;
+              } )
+
+    } else if (computerScore === 5){
+        h2.classList.add('compWin');
+        h2.innerText = `You Lose. Final Score is: ${computerScore} to ${playerScore}`;
+
+        newGame.classList.add('newGameBtn');
+        newGame.innerText = 'New Game'
+
+        scoreDiv.appendChild(h2);
+        scoreDiv.appendChild(newGame);
+
+        buttons.forEach(button => {
+            button.disabled = true;
+              } )
+           }
+
+
+    }
+
+    newGame.addEventListener('click', () =>{
+        buttons.forEach(button => {
+            button.disabled = false;
+              } )
+
+        playerScore = 0;
+        computerScore = 0;
+        runScorePlayer.innerText = `You: ${playerScore}`;
+        runScoreComp.innerText = `Computer: ${computerScore}`; 
+        outcome.innerText = '';
+        h2.innerText = '';  
+        newGame.remove(newGame);
+    })       
 
 
