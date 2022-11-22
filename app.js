@@ -106,8 +106,6 @@ const checkWinner = (playerScore,computerScore) => {
             button.disabled = true;
               } )
            }
-
-
     }
 
     newGame.addEventListener('click', () =>{
